@@ -1,4 +1,4 @@
-Scripts for home automation
+## Scripts for home automation
 
 
 | Script      | Description |
