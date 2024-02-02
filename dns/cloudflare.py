@@ -65,12 +65,12 @@ async def get_current_ip() -> str:
     return request.json()['ip_addr']
 
 
-async def update_record(GW_IP: str, RECORD_ID: str) -> None:
-    DNS_URL = f"https://api.cloudflare.com/client/v4/zones/{CLOUDFLARE_ZONE}/dns_records/{RECORD_ID}"
+async def update_record(gw_ip: str, record_id: str) -> None:
+    DNS_URL = f"https://api.cloudflare.com/client/v4/zones/{CLOUDFLARE_ZONE}/dns_records/{record_id}"
     DATA = {
         "type": "A",
         "name": f"{DNS_RECORD_TO_UPDATE}",
-        "content": f"{GW_IP}",
+        "content": f"{gw_ip}",
         "ttl": 3600,
         "proxied": False
     }
@@ -79,10 +79,10 @@ async def update_record(GW_IP: str, RECORD_ID: str) -> None:
         await send_error_logs(f"cloudflare.py: Cloudflare API Token invalid or API endpoint not responding! 🤷‍♂️ ```{request.text}```")
         sys.exit()
     
-    await send_logs(f"cloudflare.py: \nUpdated {DNS_RECORD_TO_UPDATE} with ip: {GW_IP}")
+    await send_logs(f"cloudflare.py: \nUpdated {DNS_RECORD_TO_UPDATE} with ip: {gw_ip}")
 
-async def update_previous_ip(GW_IP) -> None:
-    os.environ["GW_PREVIOUS_IP"] = GW_IP
+async def update_previous_ip(gw_ip) -> None:
+    os.environ["GW_PREVIOUS_IP"] = gw_ip
 
     with open(".env", "r") as file:
         lines = file.readlines()
@@ -90,7 +90,7 @@ async def update_previous_ip(GW_IP) -> None:
     with open(".env", "w") as file:
         for line in lines:
             if line.startswith("GW_PREVIOUS_IP="):
-                file.write(f"GW_PREVIOUS_IP={GW_IP}\n")
+                file.write(f"GW_PREVIOUS_IP={gw_ip}\n")
             else:
                 file.write(line)    
     return
@@ -98,13 +98,13 @@ async def update_previous_ip(GW_IP) -> None:
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
-    GW_IP = await get_current_ip()
+    gw_ip = await get_current_ip()
 
-    if GW_IP != GW_PREVIOUS_IP:
+    if gw_ip != GW_PREVIOUS_IP:
         await token_validation()
-        RECORD_ID = await get_record_id()
-        await update_record(GW_IP, RECORD_ID)
-        await update_previous_ip(GW_IP)
+        record_id = await get_record_id()
+        await update_record(gw_ip, record_id)
+        await update_previous_ip(gw_ip)
         sys.exit()
     
     await send_logs(f"cloudflare.py: No updates needed")
