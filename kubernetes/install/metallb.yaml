@@ -1,0 +1,32 @@
+apiVerion: v1
+kind: Namespace
+metadata:
+  name: metallb-system
+---
+apiVersion: v1
+kind: HelmChart
+metadata:
+  name: metallb
+  namespace: metallb-system
+spec:
+  repo: https://metallb.github.io/metallb
+  chart: metallb
+  targetNamespace: metallb-system
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: pool-1
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.254.1.20-10.254.1.30
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: k3s-L2
+  namespace: metallb-system
+spec:
+  addressPool: 
+    - pool-1
