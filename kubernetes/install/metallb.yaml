@@ -1,9 +1,9 @@
-apiVerion: v1
+apiVersion: v1
 kind: Namespace
 metadata:
   name: metallb-system
 ---
-apiVersion: v1
+apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
   name: metallb
@@ -20,13 +20,13 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 10.254.1.20-10.254.1.30
+  - 10.254.1.20-10.254.1.30
 ---
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
-  name: k3s-L2
+  name: k3s-l2
   namespace: metallb-system
 spec:
-  addressPool: 
-    - pool-1
+  ipAddressPools:
+  - pool-1
