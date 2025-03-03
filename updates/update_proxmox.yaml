@@ -1,0 +1,7 @@
+---
+- name: Updating proxmox cluster
+  hosts: promox
+  tasks:
+    - name: Dist-upgrade 
+      update_cache: yes
+      upgrade: dist

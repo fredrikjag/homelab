@@ -1,0 +1,7 @@
+---
+- name: Updating kubernetes cluster
+  hosts: k8s
+  tasks:
+    - name: Dist-upgrade 
+      update_cache: yes
+      upgrade: dist
