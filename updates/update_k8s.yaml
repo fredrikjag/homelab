@@ -1,7 +1,9 @@
 ---
 - name: Updating kubernetes cluster
   hosts: k8s
+  become: yes
   tasks:
     - name: Dist-upgrade 
-      update_cache: yes
-      upgrade: dist
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
