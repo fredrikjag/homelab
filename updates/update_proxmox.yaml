@@ -6,3 +6,10 @@
       ansible.builtin.apt:
         update_cache: yes
         upgrade: dist
+      register: upgrade_result
+      ignore_errors: yes
+
+    - name: Notify if upgrade failed
+      ansible.builtin.fail:
+        msg: "Dist-upgrade failed"
+      when: upgrade_result.failed
