@@ -1,4 +1,4 @@
-## Scripts for my homelab :wave:
+## Scripts and automations for my homelab
 
 | Script      | Description |
 | ----------- | ----------- |
