@@ -1,4 +1,5 @@
-## Scripts and automations for my homelab
+## homelab :technologist:
+Scripts and Automations for my homelab
 
 | Script      | Description |
 | ----------- | ----------- |
