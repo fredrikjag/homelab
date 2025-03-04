@@ -1,0 +1,59 @@
+---
+- name: Installing k3s on kubernetes nodes
+  hosts: k8s_first
+  become: true
+  tasks:
+    - name: Retreive setup from github
+      ansible.builtin.git:
+        repo: "https://github.com/fredrikjag/homelab.git"
+        dest: "/tmp/homelab"
+
+    - name: Make auto-deploy directory
+      ansible.builtin.file:
+        path: /var/lib/rancher/k3s/server/manifests/
+        state: directory
+        mode: '0754'
+
+    - name: Make config directory
+      ansible.builtin.file:
+        path: /etc/rancher/k3s/
+        state: directory
+        mode: '0754'
+
+    - name: Move kubeconfig to config directory
+      ansible.builtin.file:
+        src: "/tmp/homelab/kubernetes/install/first-config.yaml"
+        dest: "/etc/rancher/k3s/config.yaml"
+        state: link
+
+    # https://kube-vip.io/docs/usage/k3s/
+    - name: Add kube-vip manifest to auto-deploy
+      ansible.builtin.shell:
+        cmd: "curl https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml"
+        
+    - name: Verify kube-vip manifest download
+      ansible.builtin.stat:
+        path: /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml
+      register: kube_vip_manifest
+
+    - name: Ensure kube-vip manifest is downloaded
+      ansible.builtin.fail:
+        msg: "kube-vip manifest was not downloaded successfully."
+      when: not kube_vip_manifest.stat.exists
+
+    # https://kube-vip.io/docs/installation/daemonset/#kube-vip-as-ha-load-balancer-or-both
+    - name: Add kube-vip daemonset manifest to auto-deploy
+      ansible.builtin.file:
+        path: /tmp/homelab/kubernetes/install/kube-vip-ds.yaml
+        dest: "/var/lib/rancher/k3s/server/manifests/kube-vip-ds.yaml"
+        state: links
+    
+    - name: Move metallb to auto-deploy
+      ansible.builtin.file:
+        src: "/tmp/homelab/kubernetes/install/metallb.yaml"
+        dest: "/var/lib/rancher/k3s/server/manifests/metallb.yaml"
+        state: links
+    
+    - name: Install k3s on primary node
+      ansible.builtin.shell:
+        cmd: "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='server' sh -s - --K3S_TOKEN='{{ vault_secret }}' --tls-san='{{ tls_san_ip }}' --tls-san='{{ tls_san_hostname }}' --disable='servicelb' K3S_KUBECONFIG_MODE='644' --cluster-init"

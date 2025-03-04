@@ -1,0 +1,20 @@
+---
+- name: Install packages required for the implimentation
+  hosts: k8s
+  become: yes
+  tasks:
+    - name: Update cache
+      ansible.builtin.apt:
+        update_cache: yes
+    - name: Install git 
+      ansible.builtin.apt:
+        package: "git"
+        state: latest
+    - name: Install Telnet 
+      ansible.builtin.apt:
+        package: "telnet"
+        state: latest
+    - name: Install iperf3 
+      ansible.builtin.apt:
+        package: "iperf3"
+        state: latest
