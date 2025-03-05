@@ -1,19 +1,34 @@
-## homelab :technologist:
-Scripts and Automations for my homelab
+## Homelab
 
-| Script      | Description |
-| ----------- | ----------- |
-|  cloudflare.py     | Dynamically update cloudflare dns | 
+Welcome to my Homelab repository! This repo contains various scripts, tools, and technologies that help solve problems and automate tasks in my home lab. I use Kubernetes, ArgoCD, and other tools to streamline deployment and management in a dynamic environment.
 
-\
-:warning: **NOTE:** Commit message must be one of the following:
-```
-feat: A new feature
-fix: A bug fix
-docs: Documentation only changes
-style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-refactor: A code change that neither fixes a bug nor adds a feature
-perf: A code change that improves performance
-test: Adding missing tests
-chore: Changes to the build process or auxiliary tools and libraries such as documentation generation
-```
+## :books: Table of Contents
+
+- [Overview](#overview)
+- [Technologies Used](#technologies-used)
+
+## :page_with_curl: Overview
+
+This repository holds a collection of tools and scripts I use to automate, monitor, and manage my homelab infrastructure. The goal is to demonstrate how to integrate and implement various technologies such as:
+
+- **Kubernetes** for container orchestration.
+- **ArgoCD** for continuous delivery and GitOps workflows.
+- **Helm** for package management in kubernetes.
+- **Prometheus** and **Grafana** for monitoring and alerting.
+
+It’s a work-in-progress as I constantly add and improve these tools.
+
+## Technologies Used
+
+Here are some of the key technologies used in this repository:
+
+- **Ansible** – For automated deployment of various tools and configurations
+- **Kubernetes** – For container orchestration and management.
+- **ArgoCD** – Continuous delivery and GitOps tool for Kubernetes.
+- **Helm** – Kubernetes package manager for managing applications.
+- **Prometheus** – Monitoring and alerting toolkit for Kubernetes.
+- **Grafana** – Data visualization for metrics and monitoring.
+- **Various Bash/Python Scripts** – For automating setup and maintenance tasks.
+
+
+:flashlight: If you find an issue or want to improve something, feel free to reach out to me.
