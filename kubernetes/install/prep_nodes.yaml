@@ -18,3 +18,31 @@
       ansible.builtin.apt:
         package: "iperf3"
         state: latest
+    - name: Install ufw
+      ansible.builtin.apt:
+        name: ufw
+        state: latest
+        
+- name: Enable and add firewall rules
+  hosts: k8s
+  become: yes
+  tasks:
+    - name: ufw rules 
+      ansible.builtin.service:
+        name: ufw
+        enabled: yes
+        state: started
+
+    # https://docs.k3s.io/installation/requirements?os=debian#operating-systems
+    - name: Allow all to api-server
+      community.general.ufw:
+        rule: allow
+        port: 6443
+        proto: tcp
+    - name: Allow all access from pods and services
+      community.general.ufw:
+        rule: allow
+        src: '{{ item }}'
+      loop:
+        - 10.42.0.0/16
+        - 10.43.0.0/16
