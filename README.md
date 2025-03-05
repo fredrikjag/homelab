@@ -1,4 +1,4 @@
-## Homelab
+## Homelab :technologist:
 
 Welcome to my Homelab repository! This repo contains various scripts, tools, and technologies that help solve problems and automate tasks in my home lab. I use Kubernetes, ArgoCD, and other tools to streamline deployment and management in a dynamic environment.
 
