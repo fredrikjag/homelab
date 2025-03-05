@@ -18,7 +18,7 @@ This repository holds a collection of tools and scripts I use to automate, monit
 
 It’s a work-in-progress as I constantly add and improve these tools.
 
-## Technologies Used
+## :computer: Technologies Used
 
 Here are some of the key technologies used in this repository:
 
