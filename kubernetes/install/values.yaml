@@ -1,0 +1,8 @@
+---
+
+secret: "d!**oH&yAqlS#gLjA?ls?es_sPi3?c@otr$ste@@WofrL143ficef9l!wac5P#&s"
+
+tls_san_ip: "10.254.1.10"
+tls_san_hostname: "kube-vip.fredrikjag.se" # Optional: If you want to use a hostname for the VIP, rember to add it to your DNS server
+
+
