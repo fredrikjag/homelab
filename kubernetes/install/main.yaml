@@ -72,16 +72,22 @@
       when: not kube_vip_manifest.stat.exists
 
     # https://kube-vip.io/docs/installation/daemonset/#kube-vip-as-ha-load-balancer-or-both
-    - name: Add kube-vip daemonset manifest to auto-deploy
+    - name: Link kube-vip daemonset manifest to auto-deploy
       ansible.builtin.file:
         src: /tmp/homelab/kubernetes/install/config/kube-vip-ds.yaml
         dest: "/var/lib/rancher/k3s/server/manifests/kube-vip-ds.yaml"
         state: link
     
-    - name: Move metallb to auto-deploy
+    - name: Link metallb to auto-deploy
       ansible.builtin.file:
         src: "/tmp/homelab/kubernetes/install/config/metallb.yaml"
         dest: "/var/lib/rancher/k3s/server/manifests/metallb.yaml"
+        state: link
+
+    - name: Link treafik-config to auto-deploy
+      ansible.builtin.file:
+        src: "/tmp/homelab/kubernetes/install/config/treafik-config.yaml"
+        dest: "/var/lib/rancher/k3s/server/manifests/treafik-config.yaml"
         state: link
     
     - name: Install k3s on primary node
