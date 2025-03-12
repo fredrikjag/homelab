@@ -55,7 +55,7 @@
   vars_files:
   - ./values.yaml
   tasks:
-
+  
     # https://kube-vip.io/docs/usage/k3s/
     - name: Add kube-vip manifest to auto-deploy
       ansible.builtin.shell:
@@ -82,12 +82,6 @@
       ansible.builtin.file:
         src: "/tmp/homelab/kubernetes/install/config/metallb.yaml"
         dest: "/var/lib/rancher/k3s/server/manifests/metallb.yaml"
-        state: link
-
-    - name: Link treafik-config to auto-deploy
-      ansible.builtin.file:
-        src: "/tmp/homelab/kubernetes/install/config/treafik-config.yaml"
-        dest: "/var/lib/rancher/k3s/server/manifests/treafik-config.yaml"
         state: link
     
     - name: Install k3s on primary node

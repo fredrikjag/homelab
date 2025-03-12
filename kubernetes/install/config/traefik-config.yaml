@@ -1,0 +1,37 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+
+    # Disable the Deployment and enable the DaemonSet
+    deployment:
+      enabled: false # Disable Deployment
+
+    daemonset:
+      enabled: true  # Enable DaemonSet
+      # Optionally, you can add more configurations like tolerations, nodeSelector, etc.
+      podAnnotations: {}
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+
+    # IngressRoute CRDs (optional, if you are using IngressRoute)
+    ingressRoute:
+      enabled: true
+
+    # Dashboard configuration (optional)
+    dashboard:
+      enabled: true
+      domain: traefik.local
+
+    # ACME configuration for TLS (optional)
+    certificatesResolvers:
+      myresolver:
+        acme:
+          email: your-email@example.com
+          storage: /etc/traefik/acme.json
+          httpChallenge:
+            entryPoint: web
