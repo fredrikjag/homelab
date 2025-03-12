@@ -4,6 +4,7 @@ metadata:
   name: traefik
   namespace: kube-system
 spec:
+  replicas: 3
   valuesContent: |-
     additionalArguments:
       - "--api"
@@ -11,7 +12,7 @@ spec:
       - "--api.insecure=true"
       - "--log.level=DEBUG"
       - "--certificatesresolvers.myresolver.acme.email=xxxxxxx@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/data/acme.json"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.caServer=https://acme-v02.api.letsencrypt.org/directory"
     ports:
